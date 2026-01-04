@@ -2680,7 +2680,7 @@ impl Editor {
                     file.full_path(cx)
                         .extension()?
                         .to_string_lossy()
-                        .into_owned(),
+                        .to_lowercase(),
                 )
             }) {
                 key_context.set("extension", extension);
@@ -20275,6 +20275,7 @@ impl Editor {
         cx: &mut Context<Self>,
     ) -> Entity<Self> {
         const MINIMAP_FONT_WEIGHT: gpui::FontWeight = gpui::FontWeight::BLACK;
+        const MINIMAP_FONT_FAMILY: SharedString = SharedString::new_static(".ZedMono");
 
         let mut minimap = Editor::new_internal(
             EditorMode::Minimap {
@@ -20290,6 +20291,7 @@ impl Editor {
         minimap.set_text_style_refinement(TextStyleRefinement {
             font_size: Some(MINIMAP_FONT_SIZE),
             font_weight: Some(MINIMAP_FONT_WEIGHT),
+            font_family: Some(MINIMAP_FONT_FAMILY),
             ..Default::default()
         });
         minimap.update_minimap_configuration(minimap_settings, cx);
